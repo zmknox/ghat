@@ -1,0 +1,37 @@
+name: Shell commands
+
+on: [push]
+
+jobs:
+  run-shell-command: 
+    runs-on: ubuntu-latest
+    env: 
+      WF_SECRET: ${{ secrets.WF_SECRET }}
+    steps:
+      - name: echo a string
+        run: echo "Hello world"
+      - name: multiline script
+        run: |
+          node -v
+          npm -v
+      - name: Display env variables
+        run: |
+          echo "GITHUB_SHA: ${GITHUB_SHA}"
+          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+          echo "GITHUB_TOKEN: ${{ github.token }}"
+          echo "WF_SECRET: ${WF_SECRET}"
+      - name: python command
+        run: |
+          import platform
+          print(platform.processor())
+        shell: python
+  run-windows-commands:
+    runs-on: windows-latest
+    needs: ["run-shell-command"]
+    steps: 
+      - name: Directory Powershell
+        run: Get-Location
+      - name: Directory Bash
+        run: pwd
+        shell: bash 
