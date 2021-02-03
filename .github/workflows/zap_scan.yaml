@@ -3,8 +3,8 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    # Runs every day At 01:00.
-    - cron:  '0 1 * * *'
+    # Runs every day At 08:30 EST
+    - cron:  '30 13 * * *'
 
 jobs:
   zap_scan:
