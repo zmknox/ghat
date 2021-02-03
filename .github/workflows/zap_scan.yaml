@@ -2,9 +2,10 @@ name: ZAP
 on:
   push:
   workflow_dispatch:
-  schedule:
-    # Runs every day At 08:30 EST
-    - cron:  '30 13 * * *'
+    inputs:
+        url:
+          description: 'url to test'
+          required: true
 
 jobs:
   zap_scan:
@@ -14,4 +15,4 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.4.0
         with:
-          target: 'https://www.slimmtech.com/'
+          target: ${{ github.event.inputs.url }}
